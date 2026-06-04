@@ -1,0 +1,136 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 80" width="320" height="80" role="img" aria-label="SecureVote Logo">
+  <defs>
+    <!-- Neon glow filter for shield -->
+    <filter id="neon-glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="2.5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Subtle text glow -->
+    <filter id="text-glow" x="-10%" y="-30%" width="120%" height="160%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="1.2" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Shield gradient -->
+    <linearGradient id="shield-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00f5ff;stop-opacity:0.9"/>
+      <stop offset="100%" style="stop-color:#7b5ea7;stop-opacity:0.9"/>
+    </linearGradient>
+
+    <!-- Fingerprint ring gradient -->
+    <linearGradient id="ring-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00f5ff;stop-opacity:0.6"/>
+      <stop offset="100%" style="stop-color:#4a9eff;stop-opacity:0.2"/>
+    </linearGradient>
+
+    <!-- Background glow radial -->
+    <radialGradient id="bg-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#00f5ff;stop-opacity:0.06"/>
+      <stop offset="100%" style="stop-color:#0a0a1a;stop-opacity:0"/>
+    </radialGradient>
+
+    <!-- Clip path for shield shape -->
+    <clipPath id="shield-clip">
+      <path d="M40 10 L58 18 L58 38 C58 50 40 62 40 62 C40 62 22 50 22 38 L22 18 Z"/>
+    </clipPath>
+  </defs>
+
+  <!-- Background pill/glow -->
+  <ellipse cx="48" cy="40" rx="38" ry="32" fill="url(#bg-glow)"/>
+
+  <!-- ═══════════════════════════════════ -->
+  <!--            SHIELD ICON             -->
+  <!-- ═══════════════════════════════════ -->
+
+  <!-- Shield outer glow (blurred duplicate) -->
+  <path d="M40 8 L60 17 L60 39 C60 52 40 65 40 65 C40 65 20 52 20 39 L20 17 Z"
+        fill="none" stroke="#00f5ff" stroke-width="1.5" opacity="0.25"
+        filter="url(#neon-glow)"/>
+
+  <!-- Shield body -->
+  <path d="M40 10 L58 18 L58 38 C58 50 40 62 40 62 C40 62 22 50 22 38 L22 18 Z"
+        fill="rgba(0,245,255,0.05)" stroke="url(#shield-gradient)" stroke-width="1.8"
+        filter="url(#neon-glow)"/>
+
+  <!-- Circuit lines inside shield -->
+  <g clip-path="url(#shield-clip)" opacity="0.45" stroke="#00f5ff" stroke-width="0.7" fill="none">
+    <!-- Horizontal traces -->
+    <line x1="22" y1="25" x2="35" y2="25"/>
+    <line x1="45" y1="25" x2="58" y2="25"/>
+    <line x1="22" y1="35" x2="58" y2="35"/>
+    <line x1="22" y1="45" x2="30" y2="45"/>
+    <line x1="50" y1="45" x2="58" y2="45"/>
+    <!-- Vertical traces -->
+    <line x1="30" y1="18" x2="30" y2="45"/>
+    <line x1="50" y1="18" x2="50" y2="45"/>
+    <!-- Node dots -->
+    <circle cx="30" cy="25" r="1.2" fill="#00f5ff"/>
+    <circle cx="50" cy="25" r="1.2" fill="#00f5ff"/>
+    <circle cx="30" cy="35" r="1.2" fill="#00f5ff"/>
+    <circle cx="50" cy="35" r="1.2" fill="#00f5ff"/>
+  </g>
+
+  <!-- Checkmark / ballot tick at center of shield -->
+  <g filter="url(#neon-glow)">
+    <polyline points="33,38 38,44 48,32"
+              fill="none" stroke="#00f5ff" stroke-width="2.5"
+              stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <!-- ═══════════════════════════════════ -->
+  <!--         FINGERPRINT RINGS          -->
+  <!-- ═══════════════════════════════════ -->
+  <!-- Decorative concentric arcs representing biometric scan -->
+  <g opacity="0.35" fill="none" stroke="#00f5ff" stroke-width="0.8">
+    <path d="M13 40 A27 27 0 0 1 40 13" stroke-dasharray="4 3"/>
+    <path d="M9 43 A31 31 0 0 1 40 9"  stroke-dasharray="3 4"/>
+    <path d="M67 40 A27 27 0 0 0 40 13" stroke-dasharray="4 3"/>
+    <path d="M71 43 A31 31 0 0 0 40 9"  stroke-dasharray="3 4"/>
+  </g>
+
+  <!-- ═══════════════════════════════════ -->
+  <!--            WORDMARK TEXT           -->
+  <!-- ═══════════════════════════════════ -->
+
+  <!-- "Secure" -->
+  <text x="85" y="38"
+        font-family="'Courier New', 'Orbitron', monospace"
+        font-size="22" font-weight="700" letter-spacing="2"
+        fill="#00f5ff"
+        filter="url(#text-glow)">SECURE</text>
+
+  <!-- "Vote" -->
+  <text x="85" y="61"
+        font-family="'Courier New', 'Orbitron', monospace"
+        font-size="22" font-weight="700" letter-spacing="4"
+        fill="#b388ff"
+        filter="url(#text-glow)">VOTE</text>
+
+  <!-- Separating accent line -->
+  <line x1="85" y1="43" x2="290" y2="43"
+        stroke="url(#shield-gradient)" stroke-width="0.8" opacity="0.5"/>
+
+  <!-- Tagline -->
+  <text x="85" y="77"
+        font-family="'Courier New', monospace"
+        font-size="7.5" letter-spacing="2.5"
+        fill="#4a9eff" opacity="0.7">YOUR VOTE · YOUR IDENTITY · SECURED</text>
+
+  <!-- Top-right corner accent dots -->
+  <circle cx="296" cy="10" r="1.5" fill="#00f5ff" opacity="0.6"/>
+  <circle cx="305" cy="10" r="1.5" fill="#7b5ea7" opacity="0.6"/>
+  <circle cx="314" cy="10" r="1.5" fill="#00f5ff" opacity="0.4"/>
+
+  <!-- Scan line animation -->
+  <rect x="22" y="10" width="36" height="2" fill="#00f5ff" opacity="0">
+    <animate attributeName="y" from="10" to="62" dur="2.5s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0;0.4;0" dur="2.5s" repeatCount="indefinite"/>
+  </rect>
+</svg>

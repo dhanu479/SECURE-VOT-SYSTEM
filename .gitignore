@@ -1,0 +1,31 @@
+# Virtual environments
+**/venv/
+**/antigravity_venv/
+**/env/
+**/run_env/
+
+# Python cache
+**/__pycache__/
+**/*.pyc
+**/*.pyo
+**/*.pyd
+**/.Python
+
+# Environment files
+**/.env
+
+# Databases
+**/*.db
+**/*.sqlite3
+
+# OS files
+**/.DS_Store
+Thumbs.db
+
+# Large files & packages
+**/*.zip
+**/*.whl
+
+# Local user uploads/faces
+**/static/faces/
+**/static/uploads/
