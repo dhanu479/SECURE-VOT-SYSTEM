@@ -19,7 +19,14 @@ load_dotenv()
 
 import numpy as np
 import cv2
-import face_recognition
+
+try:
+    import face_recognition
+    HAS_FACE_RECOGNITION = True
+except ImportError:
+    HAS_FACE_RECOGNITION = False
+    print("WARNING: face_recognition library not found. Running in SIMULATION mode.")
+
 from flask import Flask, render_template, request, redirect, url_for, session, flash, send_from_directory
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
@@ -182,6 +189,9 @@ def process_image_from_filestorage(file_storage):
         return None
 
 def single_face_encoding(rgb_img):
+    if not HAS_FACE_RECOGNITION:
+        # Mock encoding (128 floats)
+        return np.zeros(128, dtype=np.float64), 1
     # Enforce exactly one face
     boxes = face_recognition.face_locations(rgb_img, model="hog")
     if len(boxes) != 1:
@@ -198,6 +208,13 @@ def eye_aspect_ratio(eye_points):
     return (dist(1, 5) + dist(2, 4)) / (2.0 * dist(0, 3) + 1e-6)
 
 def landmarks_68(rgb_img):
+    if not HAS_FACE_RECOGNITION:
+        # Return mock landmarks so liveness doesn't crash
+        return {
+            'left_eye': [(0,0)]*6,
+            'right_eye': [(0,0)]*6,
+            'nose_bridge': [(0,0)]*5
+        }
     lm = face_recognition.face_landmarks(rgb_img)
     if not lm or len(lm) != 1:  # exactly one face
         return None
@@ -376,7 +393,7 @@ def register():
                 return render_template('register.html', datetime=datetime)
 
             # Check if face already exists
-            if existing_encodings:
+            if HAS_FACE_RECOGNITION and existing_encodings:
                 known_encodings = [np.frombuffer(row['face_encoding'], dtype=np.float64) for row in existing_encodings]
                 # Compare the current face with all known faces
                 matches = face_recognition.compare_faces(known_encodings, enc, tolerance=0.45)
@@ -571,6 +588,11 @@ def face_verify():
             return redirect(url_for('face_verify'))
         
         try:
+            if not HAS_FACE_RECOGNITION:
+                flash("Vercel simulation mode: Face verification bypassed.", "info")
+                session['verified'] = True
+                return redirect(url_for('vote'))
+
             # Process the frame
             face_img = process_image_from_filestorage(frame_base)
             
